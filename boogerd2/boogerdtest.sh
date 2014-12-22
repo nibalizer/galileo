@@ -13,7 +13,10 @@ echo -n .
 curl -s $boogerd_url/v1/ticket/247/flags | grep 'WINTEL,HISS' >/dev/null
 echo -n .
 
+curl -s $boogerd_url/v1/all_flags | grep CHRONICLE >/dev/null
+echo -n .
 
 
 echo ""
 echo "All tests pass!"
+

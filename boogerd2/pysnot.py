@@ -15,3 +15,12 @@ def get_flags(ticket_number):
     return flags
 
 
+def list_all_flags():
+    subproc = subprocess.Popen(['testsnot', '-hF'], stdout=subprocess.PIPE)
+    flags = subproc.communicate()[0].split()[:-6]
+
+    return flags
+
+
+if __name__ == "__main__":
+    print list_all_flags()
