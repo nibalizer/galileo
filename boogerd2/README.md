@@ -49,8 +49,10 @@ List Flags
 * snot -hF
 
 
+
 Flag Ticket
 * snot -F <flag> <ticketnumber>
+* not really functional because snot command line cannot assign multiple flags
 
 
 
