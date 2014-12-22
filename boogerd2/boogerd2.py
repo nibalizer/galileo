@@ -1,8 +1,7 @@
-
-
 # Booger D 2
 # REST API in front of snot
 import subprocess
+import pysnot
 
 
 
@@ -14,13 +13,17 @@ def hello():
     return "Hello World!"
 
 
-@app.route("/v1/ticket/get/<ticket_number>")
+@app.route("/v1/ticket/<ticket_number>")
 def ticket_get(ticket_number):
 
-    subproc = subprocess.Popen(['testsnot', '-s', ticket_number], stdout=subprocess.PIPE)
-    tic = subproc.communicate()
-
+    tic = pysnot.get_ticket(ticket_number)
     return tic
+
+@app.route("/v1/ticket/<ticket_number>/flags")
+def ticket_flags_get(ticket_number):
+
+    flags = pysnot.get_flags(ticket_number)
+    return flags
 
 if __name__ == "__main__":
     app.run(debug=True)
