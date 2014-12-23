@@ -1,5 +1,6 @@
 # Snot Helper utilities
 
+import datetime
 import getent
 import subprocess
 
@@ -73,7 +74,7 @@ def unassign_ticket(ticket_number):
         return False
 
 
-def assign_ticket(ticket_number, user):
+def assign_ticket_with_validation(ticket_number, user):
     validate_existence(ticket_number)
     if user not in dict(getent.group('acat'))['members']:
         return False
@@ -81,19 +82,34 @@ def assign_ticket(ticket_number, user):
     if get_assigned(ticket_number) == user:
         return True
 
+    if assign_ticket(ticket_number, user):
+        if get_assigned(ticket_number) == user:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def assign_ticket(ticket_number, user):
+
     subproc = subprocess.Popen(['testsnot', '-R', str(user), str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     response = subproc.communicate('y\n')
 
-    if get_assigned(ticket_number) == user:
+    if subproc.returncode == 0:
         return True
     else:
         return False
 
 
+
 if __name__ == "__main__":
     #print stat_ticket(252)
     #print get_assigned(11440)
-    print assign_ticket('256', 'nobody')
+    print datetime.datetime.now()
+    print assign_ticket_with_validation('257', 'nibz')
+    print datetime.datetime.now()
+    print assign_ticket('257', 'nibz')
+    print datetime.datetime.now()
     #print list_all_flags()
 
 
