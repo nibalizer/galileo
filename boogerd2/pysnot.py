@@ -101,6 +101,17 @@ def assign_ticket(ticket_number, user):
         return False
 
 
+def resolve_ticket(ticket_number):
+
+    subproc = subprocess.Popen(['testsnot', '-c', str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    response = subproc.communicate('y\n')
+
+    if subproc.returncode == 0:
+        return True
+    else:
+        return False
+
+
 
 if __name__ == "__main__":
     #print stat_ticket(252)
