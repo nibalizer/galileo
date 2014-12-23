@@ -63,12 +63,19 @@ def list_all_flags():
     return flags
 
 
-def assign_ticket(ticket_number, user):
-    if user not in dict(getent.group('acat'))['members']:
-        if user != 'nobody':
-            return False
+def unassign_ticket(ticket_number):
+    validate_existence(ticket_number)
+    subproc = subprocess.Popen(['testsnot', '-R', 'nobody', str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    response = subproc.communicate('y\n')
+    if get_assigned(ticket_number) is None:
+        return True
+    else:
+        return False
 
-    if stat_ticket(ticket_number) != True:
+
+def assign_ticket(ticket_number, user):
+    validate_existence(ticket_number)
+    if user not in dict(getent.group('acat'))['members']:
         return False
 
     if get_assigned(ticket_number) == user:
@@ -77,7 +84,7 @@ def assign_ticket(ticket_number, user):
     subproc = subprocess.Popen(['testsnot', '-R', str(user), str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     response = subproc.communicate('y\n')
 
-    if get_assigned(ticket_number) in [user, None]:
+    if get_assigned(ticket_number) == user:
         return True
     else:
         return False

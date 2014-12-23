@@ -38,16 +38,16 @@ assert(True == pysnot.assign_ticket(255, 'nibz'))
 assert('nibz' == pysnot.get_assigned(255))
 
 # 256
-# Should start assigned to nobody
+# Should start unassigned
 # Assign to nibz
 # Reassign to nibz (should succeed)
-# Assign back to nobody
+# Unsassign
 assert(None == pysnot.get_assigned(256))
 assert(True == pysnot.assign_ticket(256, 'nibz'))
 assert('nibz' == pysnot.get_assigned(256))
 assert(True == pysnot.assign_ticket(256, 'nibz'))
 assert('nibz' == pysnot.get_assigned(256))
-assert(True == pysnot.assign_ticket(256, 'nobody'))
+assert(True == pysnot.unassign_ticket(256))
 assert(None == pysnot.get_assigned(256))
 
 
