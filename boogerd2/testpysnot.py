@@ -2,6 +2,7 @@
 # Testing code for pysnot
 # tested with snot database
 # assumes ticket 11440 doesn't exist
+# makes some assumptions about initial states of tickets 250 - 260 
 
 
 import datetime
@@ -55,8 +56,12 @@ assert('nibz' == pysnot.get_assigned(256))
 assert(True == pysnot.unassign_ticket(256))
 assert(None == pysnot.get_assigned(256))
 
-# 257 >> Assigned to nibz, test assign to nibz
-# Maybe don't need this after all?
+# 257 Reserved for future use
+
+tic = pysnot.get_metadata(255)
+assert(tic['summary_email'] == 'nibz@cat.pdx.edu')
+assert(tic['number'] == 255)
+
 
 
 

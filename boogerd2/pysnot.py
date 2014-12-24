@@ -56,6 +56,11 @@ def get_assigned(ticket_number):
         return None
     return owner
 
+def get_metadata(ticket_number):
+    validate_existence(ticket_number)
+    parsed_data = sp.parseTicket(ticket_number, 'testsnot')
+    return parsed_data
+
 
 def list_all_flags():
     subproc = subprocess.Popen(['testsnot', '-hF'], stdout=subprocess.PIPE)
@@ -116,12 +121,14 @@ def resolve_ticket(ticket_number):
 if __name__ == "__main__":
     #print stat_ticket(252)
     #print get_assigned(11440)
-    print datetime.datetime.now()
-    print assign_ticket_with_validation('257', 'nibz')
-    print datetime.datetime.now()
-    print assign_ticket('257', 'nibz')
-    print datetime.datetime.now()
+    #print datetime.datetime.now()
+    #print assign_ticket_with_validation('257', 'nibz')
+    #print datetime.datetime.now()
+    #print assign_ticket('257', 'nibz')
+    #print datetime.datetime.now()
+    #print resolve_ticket(262)
     #print list_all_flags()
+    print get_metadata(255)
 
 
 
