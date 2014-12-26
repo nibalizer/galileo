@@ -13,4 +13,3 @@ parsed_data = sp.parseTicket(100023)
 print parsed_data
 
 
-

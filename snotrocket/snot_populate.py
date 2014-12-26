@@ -18,6 +18,12 @@ es = Elasticsearch()
 # but not deserialized
 #print es.get(index="my-index", doc_type="test-type", id=42)['_source']
 
+def import_ticket(ticket, es_index):
+    t = int(ticket)
+    parsed_data = sp.parseTicket(t, 'testsnot')
+    es.index(index=es_index, doc_type="snot-ticket", id=ticket, body=parsed_data)
+
+
 def initial_import(active_dir, es_index):
     """
     import every snot ticket in active_dir into a snot index
@@ -27,16 +33,16 @@ def initial_import(active_dir, es_index):
     tickets.remove('bounds')
     tickets.remove('index')
     for ticket in tickets:
-        t = int(t)
-        parsed_data = sp.parseTicket(100023, testsnot)
-        es.index(index=es_index, doc_type="snot-ticket", id=ticket_number, body=parsed_data)
+        t = int(ticket)
+        import_ticket(t, es_index)
+        print ticket, parsed_data['status']
 
 
 
 
 def random_crap():
     ticket_number=100023
-    parsed_data = sp.parseTicket(100023, testsnot)
+    parsed_data = sp.parseTicket(100023, 'testsnot')
     #print parsed_data
     #print es.get(index="snotrocket", doc_type="snot-ticket", id=ticket_number)
     a = datetime.now()
@@ -52,4 +58,6 @@ def random_crap():
 
 
 if __name__ == "__main__":
-    initial_import('/u/snot/test/spool/active', 'snotrocket')
+    #initial_import('/u/snot/test/spool/active', 'snotrocket')
+    import_ticket(261, 'snotrocket')
+    #random_crap()

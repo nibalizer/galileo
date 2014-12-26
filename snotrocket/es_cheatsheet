@@ -2,3 +2,33 @@
 List indices
 
 curl 'localhost:9200/_cat/indices?v'
+
+
+Count things in the snotrocket index
+
+curl -XGET 'http://localhost:9200/snotrocket/snot-ticket/_count' -d '
+{
+    "query" : {
+        "match_all": {}
+    }
+}'
+
+
+
+ES query to match on term
+
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+
+
+
+
+How many tickets are open
+
+curl -XGET 'http://localhost:9200/snotrocket/snot-ticket/_count' -d '{ "query" : { "term" : { "status": "open" }}}' | cut -d "," -f 1
+
+
+Get a particular ticket
+
+curl 'http://localhost:9200/snotrocket/snot-ticket/263'
