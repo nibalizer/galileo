@@ -12,7 +12,7 @@ requirements
 
 
 Python requirements are established in requirements.txt
-Additionally an elasticsearch cluster must be listening on localhost.
+Additionally an elasticsearch cluster, or single node, must be listening on localhost. Currently running/tested on ES 1.4
 
 
 
