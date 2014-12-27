@@ -57,3 +57,10 @@ Flag Ticket
 
 
 
+
+Testing
+-------
+
+
+You can run the limited tests by using ./boogerdtest.sh in the project dir.
+
