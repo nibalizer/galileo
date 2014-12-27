@@ -9,9 +9,23 @@ import datetime
 import os
 
 import pysnot
+from test_snotrocket_sync import *
 
 class ShitsFucked(Exception):
     pass
+
+# if the enviornment variable TEST_SNOTROCKET is set to 'true'
+# then validate the changes done here are reflected in the snot
+# rocket cache (elasticsearch)
+# make sure you are actually running snotrocket_sync :P
+# TODO: make elasticsearch url setable
+# TODO: create, use, and clean a unique elasticsearch index
+
+
+run_snotrocket_tests = False
+if os.environ.get('TEST_SNOTROCKET') == 'true':
+    run_snotrocket_tests = True
+
 
 #test stat_ticket
 
@@ -36,9 +50,11 @@ else:
 # Then get assigned back to nibz
 assert('nibz' == pysnot.get_assigned(255))
 assert(True == pysnot.assign_ticket_with_validation(255, 'cawil'))
+run_snotrocket_tests and validate_assigned(255, 'cawil')
 assert('cawil' == pysnot.get_assigned(255))
 assert(True == pysnot.assign_ticket(255, 'nibz'))
 assert('nibz' == pysnot.get_assigned(255))
+run_snotrocket_tests and validate_assigned(255, 'nibz')
 
 # 256
 # Should start unassigned (testsnot -R nobody 256)
@@ -48,6 +64,7 @@ assert('nibz' == pysnot.get_assigned(255))
 # Unsassign
 assert(None == pysnot.get_assigned(256))
 assert(True == pysnot.assign_ticket(256, 'nibz'))
+run_snotrocket_tests and validate_assigned(256, 'nibz')
 assert('nibz' == pysnot.get_assigned(256))
 assert(True == pysnot.assign_ticket(256, 'nibz'))
 assert('nibz' == pysnot.get_assigned(256))
@@ -55,6 +72,7 @@ assert(True == pysnot.assign_ticket_with_validation(256, 'nibz'))
 assert('nibz' == pysnot.get_assigned(256))
 assert(True == pysnot.unassign_ticket(256))
 assert(None == pysnot.get_assigned(256))
+run_snotrocket_tests and validate_assigned(256, None)
 
 # 257 Reserved for future use
 

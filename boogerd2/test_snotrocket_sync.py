@@ -1,0 +1,1 @@
+../snotrocket/test_snotrocket_sync.py
