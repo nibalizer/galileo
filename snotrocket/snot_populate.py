@@ -21,7 +21,7 @@ es = Elasticsearch()
 def import_ticket(ticket, es_index):
     t = int(ticket)
     parsed_data = sp.parseTicket(t, 'testsnot')
-    es.index(index=es_index, doc_type="snot-ticket", id=ticket, body=parsed_data)
+    b = es.index(index=es_index, doc_type="snot-ticket", id=ticket, body=parsed_data)
 
 
 def initial_import(active_dir, es_index):
@@ -59,5 +59,5 @@ def random_crap():
 
 if __name__ == "__main__":
     #initial_import('/u/snot/test/spool/active', 'snotrocket')
-    import_ticket(261, 'snotrocket')
+    import_ticket(264, 'snotrocket')
     #random_crap()
