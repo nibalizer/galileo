@@ -1,3 +1,9 @@
+#!/usr/bin/python
+
+# snotrocket_populate
+
+# script to do a one time population of snot tickets into elasticsearch
+
 # core imports
 from datetime import datetime
 import os
@@ -12,11 +18,6 @@ import snotparser.snotparser as sp
 es = Elasticsearch()
 
 
-# datetimes will be serialized
-#es.index(index="my-index", doc_type="test-type", id=42, body={"any": "data", "timestamp": datetime.now()})
-
-# but not deserialized
-#print es.get(index="my-index", doc_type="test-type", id=42)['_source']
 
 def import_ticket(ticket, es_index):
     t = int(ticket)
@@ -38,26 +39,6 @@ def initial_import(active_dir, es_index):
         print ticket, parsed_data['status']
 
 
-
-
-def random_crap():
-    ticket_number=100023
-    parsed_data = sp.parseTicket(100023, 'testsnot')
-    #print parsed_data
-    #print es.get(index="snotrocket", doc_type="snot-ticket", id=ticket_number)
-    a = datetime.now()
-    print es.get(index="snotrocket", doc_type="snot-ticket", id=ticket_number)
-    b = datetime.now()
-    parsed_data = sp.parseTicket(100023)
-    print parsed_data
-    c = datetime.now()
-
-    print b - a
-    print c - b
-
-
-
 if __name__ == "__main__":
     #initial_import('/u/snot/test/spool/active', 'snotrocket')
     import_ticket(264, 'snotrocket')
-    #random_crap()

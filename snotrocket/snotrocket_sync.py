@@ -3,10 +3,12 @@
 # application to follow the snot log and refresh the snotrocket
 # cache as necessary
 
+# doesn't return, must be run as a daemon
+
 from elasticsearch import Elasticsearch
 import tailer
 
-from snot_populate import import_ticket
+from snotrocket_populate import import_ticket
 import snotparser.snotparser as sp
 
 snot_log = '/u/snot/test/logs/log'
