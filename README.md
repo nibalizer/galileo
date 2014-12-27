@@ -45,8 +45,26 @@ Tooling
 Right now most things are in python. But hopefully we can nail down the interfaces between the components and some of them can be written or rewritten in other languages.
 
 
+
+
+Testing
+-------
+
+Right now there is some super limited testing. These tests are end to end test that directly modify testsnot. Making this better would be cool.
+
+
+
 Naming
 ------
 
 
 Nothing special is meant by the name galileo, it was unique and random. Subproject tooling names will be as hillarious as possible.
+
+
+
+
+Contributing
+------------
+
+
+This project is in serious need of help. To find tasks you can ask on irc or git grep TODO. For contribution processes, read CONTRIBUTING.
