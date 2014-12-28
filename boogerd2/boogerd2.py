@@ -4,7 +4,6 @@ import subprocess
 import pysnot
 
 
-
 from flask import Flask, abort, request, jsonify
 app = Flask(__name__)
 
@@ -46,7 +45,8 @@ def ticket_metadata_get(ticket_number):
 def all_flags():
 
     flags = pysnot.list_all_flags()
-    #this looks funky because of http://flask.pocoo.org/docs/0.10/security/#json-security
+    #this looks funky because of
+    #http://flask.pocoo.org/docs/0.10/security/#json-security
     return jsonify({"all_flags": flags})
 
 
