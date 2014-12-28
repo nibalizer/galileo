@@ -20,11 +20,31 @@ def ticket_get(ticket_number):
     return tic
 
 
+@app.route("/v1/ticket/<int:ticket_number>/raw")
+def ticket_get_raw(ticket_number):
+
+    tic = pysnot.get_ticket_raw(ticket_number)
+    return tic
+
+
 @app.route("/v1/ticket/<int:ticket_number>/flags")
 def ticket_flags_get(ticket_number):
 
     flags = pysnot.get_flags(ticket_number)
     return flags
+
+
+@app.route("/v1/ticket/<int:ticket_number>/reply_to")
+def ticket_reply_to_get(ticket_number):
+
+    reply_to_string = pysnot.get_reply_to(ticket_number)
+    return reply_to_string
+
+@app.route("/v1/ticket/<int:ticket_number>/subject")
+def ticket_subject_get(ticket_number):
+
+    subject = pysnot.get_subject(ticket_number)
+    return subject
 
 
 @app.route("/v1/ticket/<int:ticket_number>/assigned")
