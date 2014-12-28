@@ -13,35 +13,35 @@ def hello():
     return "Hello World!"
 
 
-@app.route("/v1/ticket/<ticket_number>")
+@app.route("/v1/ticket/<int:ticket_number>")
 def ticket_get(ticket_number):
 
     tic = pysnot.get_ticket(ticket_number)
     return tic
 
 
-@app.route("/v1/ticket/<ticket_number>/flags")
+@app.route("/v1/ticket/<int:ticket_number>/flags")
 def ticket_flags_get(ticket_number):
 
     flags = pysnot.get_flags(ticket_number)
     return flags
 
 
-@app.route("/v1/ticket/<ticket_number>/assigned")
+@app.route("/v1/ticket/<int:ticket_number>/assigned")
 def ticket_assigned_get(ticket_number):
 
     assigned = pysnot.get_assigned(ticket_number)
     return assigned
 
 
-@app.route("/v1/ticket/<ticket_number>/metadata")
+@app.route("/v1/ticket/<int:ticket_number>/metadata")
 def ticket_metadata_get(ticket_number):
 
     metadata = pysnot.get_metadata(ticket_number)
     return jsonify(metadata)
 
 
-@app.route("/v1/ticket/<ticket_number>/resolve_silent", methods=['POST'])
+@app.route("/v1/ticket/<int:ticket_number>/resolve_silent", methods=['POST'])
 def ticket_resolve(ticket_number):
 
     success = pysnot.resolve_ticket_silent(ticket_number)
