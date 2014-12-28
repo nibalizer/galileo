@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "Boogerd 2"
 
 
 @app.route("/v1/ticket/<int:ticket_number>")
