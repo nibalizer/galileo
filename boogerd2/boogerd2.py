@@ -41,6 +41,13 @@ def ticket_metadata_get(ticket_number):
     return jsonify(metadata)
 
 
+@app.route("/v1/ticket/<ticket_number>/resolve", methods=['POST'])
+def ticket_resolve(ticket_number):
+
+    success = pysnot.resolve_ticket(ticket_number)
+    return str(success)
+
+
 @app.route("/v1/all_flags")
 def all_flags():
 
