@@ -45,7 +45,16 @@ def get_ticket(ticket_number):
 def get_ticket_raw(ticket_number):
     subproc = subprocess.Popen(['testsnot', '-sr', str(ticket_number)], stdout=subprocess.PIPE)
     tic = subproc.communicate()
-    return tic
+
+
+def get_history(ticket_number):
+    validate_existence(ticket_number)
+    hist = sp.getTicketHistory(ticket_number, 'testsnot')
+    #TODO: push this chomping into snotparser
+    #TODO: fix the snotparser implementation, it sux
+    #TODO: use caching
+    history = [i.strip() for i in hist]
+    return history
 
 
 def get_reply_to(ticket_number):
@@ -217,7 +226,7 @@ def update_ticket(ticket_number,
 
 
 if __name__ == "__main__":
-    print update_ticket(267, 'nibz@cat.pdx.edu,cmurphy@cat.pdx.edu', from_email='blkperl@cat.pdx.edu', message='test lasers')
+    #print update_ticket(267, 'nibz@cat.pdx.edu,cmurphy@cat.pdx.edu', from_email='blkperl@cat.pdx.edu', message='test lasers')
     #print stat_ticket(252)
     #print get_assigned(11440)
     #print datetime.datetime.now()
@@ -229,6 +238,7 @@ if __name__ == "__main__":
     #print list_all_flags()
     #print get_metadata(255)
     #print resolve_ticket(266, 'blkperl@cat.pdx.edu', None)
+    print get_history(137)
 
 
 

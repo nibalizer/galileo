@@ -2,7 +2,7 @@
 # Testing code for pysnot
 # tested with snot database
 # assumes ticket 11440 doesn't exist
-# makes some assumptions about initial states of tickets 250 - 260
+# makes some assumptions about initial states of tickets 137, 250 - 260
 
 
 import datetime
@@ -80,6 +80,9 @@ tic = pysnot.get_metadata(255)
 assert(tic['summary_email'] == 'nibz@cat.pdx.edu')
 assert(tic['number'] == 255)
 
+# Ticket 137
 
-
+tic_history = pysnot.get_history(137)
+assert(tic_history[0] == 'Wed Oct 22 04:23:46 PM 2014 CMD: RECV TKT: 137 BY: finnre@cat.pdx.edu')
+assert(tic_history[1] == 'Wed Oct 22 04:31:13 PM 2014 CMD: UPDATE TKT: 137 BY: rubins@cat.pdx.edu')
 
