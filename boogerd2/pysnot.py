@@ -56,6 +56,7 @@ def get_assigned(ticket_number):
         return None
     return owner
 
+
 def get_metadata(ticket_number):
     validate_existence(ticket_number)
     parsed_data = sp.parseTicket(ticket_number, 'testsnot')
