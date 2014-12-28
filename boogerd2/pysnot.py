@@ -1,8 +1,10 @@
 # Snot Helper utilities
 
 import datetime
+from email.mime.text import MIMEText
 import getent
 import subprocess
+import smtplib
 
 import snotparser.snotparser as sp
 
@@ -107,7 +109,7 @@ def assign_ticket(ticket_number, user):
         return False
 
 
-def resolve_ticket(ticket_number):
+def resolve_ticket_silent(ticket_number):
 
     subproc = subprocess.Popen(['testsnot', '-c', str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     response = subproc.communicate('y\n')
@@ -117,6 +119,27 @@ def resolve_ticket(ticket_number):
     else:
         return False
 
+
+def resolve_ticket(number, from_email, config, message=None):
+
+    """
+    Send an email to resolve a ticket"
+    Stolen from underscore by Prill
+    """
+    # to = config['snot']['snotEmail']
+    to = 'testtrouble@cat.pdx.edu'
+
+    msg = MIMEText(message)
+    msg['Subject'] = "Completing ticket #%d" % number
+    msg['From']    = from_email
+    msg['To']      = to
+    msg.add_header("X-TTS", "%d COMP" % number)
+
+    s = smtplib.SMTP('localhost')
+    s.sendmail(from_email, [msg['To']], msg.as_string())
+    s.quit()
+
+    return True
 
 
 if __name__ == "__main__":
@@ -129,7 +152,8 @@ if __name__ == "__main__":
     #print datetime.datetime.now()
     #print resolve_ticket(262)
     #print list_all_flags()
-    print get_metadata(255)
+    #print get_metadata(255)
+    print resolve_ticket(266, 'blkperl@cat.pdx.edu', None)
 
 
 

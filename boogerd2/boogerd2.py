@@ -41,10 +41,10 @@ def ticket_metadata_get(ticket_number):
     return jsonify(metadata)
 
 
-@app.route("/v1/ticket/<ticket_number>/resolve", methods=['POST'])
+@app.route("/v1/ticket/<ticket_number>/resolve_silent", methods=['POST'])
 def ticket_resolve(ticket_number):
 
-    success = pysnot.resolve_ticket(ticket_number)
+    success = pysnot.resolve_ticket_silent(ticket_number)
     return str(success)
 
 

@@ -2,7 +2,7 @@
 # Testing code for pysnot
 # tested with snot database
 # assumes ticket 11440 doesn't exist
-# makes some assumptions about initial states of tickets 250 - 260 
+# makes some assumptions about initial states of tickets 250 - 260
 
 
 import datetime
