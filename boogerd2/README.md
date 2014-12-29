@@ -21,12 +21,36 @@ Get text of ticket
 GET /v1/ticket/<ticket number>
 
 
+Get "raw" text of ticket, with headers and admin info
+GET /v1/ticket/<ticket number>/raw
+
+
 Get flags of ticket
 GET /v1/ticket/<ticket number>/flags
 
 
+Get the message id to reply to ticket with (In-Reply-To)
+GET /v1/ticket/<ticket number>/reply_to
+
+
+Get subject of ticket
+GET /v1/ticket/<ticket number>/subject
+
+
+Get the person who is assigned to the ticket
+GET /v1/ticket/<ticket number>/assigned
+
+
+Get a json blob of all available metadata
+GET /v1/ticket/<ticket number>/metadata
+
+
 Get all flags possible to flag
 GET /v1/all_flags
+
+
+Resolve a ticket silently
+POST /v1/ticket/<ticket number>/resolve_silent
 
 
 
