@@ -40,6 +40,7 @@ def ticket_reply_to_get(ticket_number):
     reply_to_string = pysnot.get_reply_to(ticket_number)
     return reply_to_string
 
+
 @app.route("/v1/ticket/<int:ticket_number>/subject")
 def ticket_subject_get(ticket_number):
 
