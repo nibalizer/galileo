@@ -69,11 +69,31 @@ def get_flags(ticket_number):
     flags = parsed_data['flags']
     return flags
 
-def get_subject(ticket_number):
+
+def get_to(ticket_number):
     validate_existence(ticket_number)
     parsed_data = sp.parseTicket(ticket_number, 'testsnot')
-    subject = parsed_data['subject']
-    return subject
+    to_line = parsed_data['to_line']
+    return to_line
+
+
+def get_cc(ticket_number):
+    validate_existence(ticket_number)
+    parsed_data = sp.parseTicket(ticket_number, 'testsnot')
+    cc_line = parsed_data['cc_line']
+    return cc_line
+
+
+def get_emails_involved(ticket_number):
+    validate_existence(ticket_number)
+    parsed_data = sp.parseTicket(ticket_number, 'testsnot')
+    cc_line = parsed_data['cc_line'].split(',')
+    to_line = parsed_data['to_line'].split(',')
+    from_line = parsed_data['from_line'].split(',')
+    inv = list(set(cc_line + to_line + from_line))
+    involved = [i.lstrip().strip() for i in inv ]
+    return involved
+
 
 def get_reply_subject(ticket_number):
     """
@@ -238,7 +258,8 @@ if __name__ == "__main__":
     #print list_all_flags()
     #print get_metadata(255)
     #print resolve_ticket(266, 'blkperl@cat.pdx.edu', None)
-    print get_history(137)
+    #print get_history(137)
+    print get_emails_involved(267)
 
 
 

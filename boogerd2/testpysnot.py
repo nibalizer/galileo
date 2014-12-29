@@ -86,3 +86,11 @@ tic_history = pysnot.get_history(137)
 assert(tic_history[0] == 'Wed Oct 22 04:23:46 PM 2014 CMD: RECV TKT: 137 BY: finnre@cat.pdx.edu')
 assert(tic_history[1] == 'Wed Oct 22 04:31:13 PM 2014 CMD: UPDATE TKT: 137 BY: rubins@cat.pdx.edu')
 
+tic_267_involved = pysnot.get_emails_involved(267)
+assert(tic_267_involved == ['blkperl@cat.pdx.edu',
+    'nibz@cat.pdx.edu',
+    'cmurphy@cat.pdx.edu',
+    'testtrouble@cat.pdx.edu',
+    'bucknerb@cat.pdx.edu'])
+
+
