@@ -88,7 +88,11 @@ def get_cc(ticket_number):
 def get_emails_involved(ticket_number):
     validate_existence(ticket_number)
     parsed_data = sp.parseTicket(ticket_number, 'testsnot')
-    cc_line = parsed_data['cc_line'].split(',')
+    cc = parsed_data.get('cc_line')
+    if cc is None:
+        cc_line = []
+    else:
+        cc_line = cc.split(',')
     to_line = parsed_data['to_line'].split(',')
     from_line = parsed_data['from_line'].split(',')
     inv = list(set(cc_line + to_line + from_line))
@@ -100,7 +104,7 @@ def get_reply_subject(ticket_number):
     """
     Append Re: to subjet if it doesn't already exist
     """
-    subject = get_subject(ticket_number)
+    subject = get_metadata(ticket_number)['subject']
     if subject.startswith("Re:"):
         pass
     else:
@@ -209,7 +213,7 @@ def resolve_ticket(number, from_email, config, message=None):
 
 
 def update_ticket(ticket_number,
-        to,
+        to=None,
         from_email='testtrouble@cat.pdx.edu',
         subject=None,
         message=None):
@@ -230,10 +234,13 @@ def update_ticket(ticket_number,
     # to real snot
     cc = 'testtrouble@cat.pdx.edu'
 
+    if to is None:
+        to = get_emails_involved(ticket_number)
+
     msg = MIMEText(message)
     msg['Subject'] = subject
     msg['From']    = from_email
-    msg['To']      = cc + ',' + to
+    msg['To']      = ",".join([cc] + to)
     # This is actually not a bug. It's the only way I could get it
     # to work. If someone can figure out a better way, please let
     # me know.
@@ -260,7 +267,8 @@ if __name__ == "__main__":
     #print get_metadata(255)
     #print resolve_ticket(266, 'blkperl@cat.pdx.edu', None)
     #print get_history(137)
-    print get_emails_involved(267)
+    #print get_emails_involved(267)
+    print update_ticket(267, message="Do thing with the stuff")
 
 
 

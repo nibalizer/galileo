@@ -7,6 +7,7 @@
 
 import datetime
 import os
+import time
 
 import pysnot
 from test_snotrocket_sync import *
@@ -93,4 +94,12 @@ assert(tic_267_involved == ['blkperl@cat.pdx.edu',
     'testtrouble@cat.pdx.edu',
     'bucknerb@cat.pdx.edu'])
 
+
+# ticket 268
+# keep sending messages to it and evaluate
+now = str(datetime.datetime.now())
+pysnot.update_ticket(268, message="Testing pysnot: {0}".format(now))
+time.sleep(5)
+ticket_268 = pysnot.get_ticket(268)
+assert(now in str(ticket_268))
 
