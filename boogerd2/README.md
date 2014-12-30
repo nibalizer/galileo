@@ -13,6 +13,15 @@ github.com/prill/snotparser
 
 
 
+Quickstart
+==========
+
+
+
+% curl -XPOST -d '{ "message": "Hello\n I am groot", "user": "nibz@cat.pd x.edu" }' http://localhost:5000/v1/ticket/269/update
+
+
+
 API v1
 ======
 

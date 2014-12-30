@@ -103,7 +103,6 @@ def ticket_unassign(ticket_number):
 def ticket_assign(ticket_number):
     data = request.get_json(force=True)
     username = data['user']
-    print username
     if '@' not in username:
         abort(400, "You must specify an email address")
 
@@ -114,6 +113,28 @@ def ticket_assign(ticket_number):
         return jsonify(resp)
     else:
         abort(400, "Failed for unknown reasons")
+
+
+@app.route("/v1/ticket/<int:ticket_number>/update", methods=['POST'])
+def ticket_update(ticket_number):
+    data = request.get_json(force=True)
+    user = data.get('user')
+    to = data.get('to')
+    subject = data.get('subject')
+    message = data.get('message')
+    if message is None:
+        abort(400, "You must specify a message")
+
+    msg = pysnot.update_ticket(ticket_number,
+                               to=to,
+                               user=user,
+                               subject=subject,
+                               message=message)
+
+    #TODO: unpack this a bit
+    return jsonify({"message": str(msg)})
+
+
 
 
 @app.route("/v1/all_flags")

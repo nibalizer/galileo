@@ -214,7 +214,7 @@ def resolve_ticket(number, from_email, config, message=None):
 
 def update_ticket(ticket_number,
         to=None,
-        from_email='testtrouble@cat.pdx.edu',
+        user=None,
         subject=None,
         message=None):
 
@@ -234,23 +234,25 @@ def update_ticket(ticket_number,
     # to real snot
     cc = 'testtrouble@cat.pdx.edu'
 
+    # if no recipients were specifed, spray email at everyone
     if to is None:
         to = get_emails_involved(ticket_number)
+        to.remove(cc)
+
+    if user is None:
+        user = 'testtrouble@cat.pdx.edu'
 
     msg = MIMEText(message)
     msg['Subject'] = subject
-    msg['From']    = from_email
+    msg['From']    = user
     msg['To']      = ",".join([cc] + to)
     # This is actually not a bug. It's the only way I could get it
     # to work. If someone can figure out a better way, please let
     # me know.
     msg['In-Reply-To'] = "In-Reply-To " + get_reply_to(ticket_number)
 
-    fire_email(msg, from_email)
-
-    # Email... doesn't really have success. So we can return True
-    # here and shucks man, idunno.
-    return True
+    fire_email(msg, user)
+    return msg
 
 
 if __name__ == "__main__":
