@@ -15,6 +15,15 @@ else
   exit 1
 fi
 
+if which jq >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #0.1 failed"
+  echo "jq not in path, required for testing"
+  exit 1
+fi
+
 if curl -s $boogerd_url/v1/ticket/247 | grep 'NUMBER:        247' >/dev/null
 then
   echo -n .
@@ -23,11 +32,30 @@ else
   exit 1
 fi
 
-if curl -s $boogerd_url/v1/ticket/247/flags | grep 'WINTEL,HISS' >/dev/null
+
+# The following test assumes that 247 has been flagged wintel and hiss
+flags_247_output=`curl -s $boogerd_url/v1/ticket/247/flags`
+if echo $flags_247_output | jq '.flags[0]' | grep 'WINTEL' >/dev/null
 then
   echo -n .
 else
-  echo "TEST #2 failed"
+  echo "TEST #2.1 failed"
+  exit 1
+fi
+
+if echo $flags_247_output | jq '.flags[1]' | grep 'HISS' >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #2.2 failed"
+  exit 1
+fi
+
+if echo $flags_247_output | jq '.flags[2]' | grep 'null' >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #2.3 failed"
   exit 1
 fi
 

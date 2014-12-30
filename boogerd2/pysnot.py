@@ -67,7 +67,7 @@ def get_reply_to(ticket_number):
 def get_flags(ticket_number):
     validate_existence(ticket_number)
     parsed_data = sp.parseTicket(ticket_number, 'testsnot')
-    flags = parsed_data['flags']
+    flags = parsed_data['flags'].split(',')
     return flags
 
 

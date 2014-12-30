@@ -17,21 +17,27 @@ def hello():
 def ticket_get(ticket_number):
 
     tic = pysnot.get_ticket(ticket_number)
-    return tic
+    resp = {"ticket_number": ticket_number,
+            "content": tic}
+    return jsonify(resp)
 
 
 @app.route("/v1/ticket/<int:ticket_number>/raw")
 def ticket_get_raw(ticket_number):
 
     tic = pysnot.get_ticket_raw(ticket_number)
-    return tic
+    resp = {"ticket_number": ticket_number,
+            "content": tic}
+    return jsonify(resp)
 
 
 @app.route("/v1/ticket/<int:ticket_number>/flags")
 def ticket_flags_get(ticket_number):
 
     flags = pysnot.get_flags(ticket_number)
-    return flags
+    resp = {"ticket_number": ticket_number,
+            "flags": flags}
+    return jsonify(resp)
 
 
 @app.route("/v1/ticket/<int:ticket_number>/reply_to")
