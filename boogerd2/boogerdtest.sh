@@ -48,7 +48,7 @@ else
 fi
 
 output=`curl -s $boogerd_url/v1/ticket/247/metadata`
-if echo $output | grep '"assigned_to": "nibz",' >/dev/null
+if echo $output | grep '"assigned_to": "nibz@cat.pdx.edu",' >/dev/null
 then
   echo -n .
 else
@@ -71,6 +71,38 @@ else
   echo "TEST #7 failed"
   exit 1
 fi
+
+
+if curl -s -XPOST -d '{ "user": "blkperl@cat.pdx.edu" }' $boogerd_url/v1/ticket/247/assign | grep '"assigned": "blkperl@cat.pdx.edu",' >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #8 failed"
+  exit 1
+fi
+
+if curl -s $boogerd_url/v1/ticket/247/assigned | grep '"assigned": "blkperl@cat.pdx.edu",' >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #9 failed"
+  exit 1
+fi
+
+if curl -s -XPOST $boogerd_url/v1/ticket/247/unassign | grep ' "assigned": false,' >/dev/null
+then
+  echo -n .
+else
+  echo "TEST #10 failed"
+  exit 1
+fi
+
+curl -s -XPOST -d '{ "user": "nibz@cat.pdx.edu" }' $boogerd_url/v1/ticket/247/assign >/dev/null
+
+
+
+
+
 
 
 echo ""

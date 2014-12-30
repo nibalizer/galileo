@@ -50,9 +50,16 @@ def ticket_subject_get(ticket_number):
 
 @app.route("/v1/ticket/<int:ticket_number>/assigned")
 def ticket_assigned_get(ticket_number):
+    #TODO add a handler for accept: application/json
 
     assigned = pysnot.get_assigned(ticket_number)
-    return assigned
+    if assigned is None:
+        resp = {"ticket_number": ticket_number,
+                "assigned": False}
+        return jsonify(resp)
+    resp = {"ticket_number": ticket_number,
+            "assigned": assigned}
+    return jsonify(resp)
 
 
 @app.route("/v1/ticket/<int:ticket_number>/metadata")
@@ -66,7 +73,41 @@ def ticket_metadata_get(ticket_number):
 def ticket_resolve(ticket_number):
 
     success = pysnot.resolve_ticket_silent(ticket_number)
-    return str(success)
+    if success:
+        resp = {"ticket_number": ticket_number,
+                "assigned": False}
+        return jsonify(resp)
+    else:
+        abort(400, "Failed for unknown reasons")
+
+
+@app.route("/v1/ticket/<int:ticket_number>/unassign", methods=['POST'])
+def ticket_unassign(ticket_number):
+
+    success = pysnot.unassign_ticket(ticket_number)
+    if success:
+        resp = {"ticket_number": ticket_number,
+                "assigned": False}
+        return jsonify(resp)
+    else:
+        abort(400, "Failed for unknown reasons")
+
+
+@app.route("/v1/ticket/<int:ticket_number>/assign", methods=['POST'])
+def ticket_assign(ticket_number):
+    data = request.get_json(force=True)
+    username = data['user']
+    print username
+    if '@' not in username:
+        abort(400, "You must specify an email address")
+
+    success = pysnot.assign_ticket(ticket_number, data['user'])
+    if success:
+        resp = {"ticket_number": ticket_number,
+                "assigned": username}
+        return jsonify(resp)
+    else:
+        abort(400, "Failed for unknown reasons")
 
 
 @app.route("/v1/all_flags")
@@ -76,6 +117,14 @@ def all_flags():
     #this looks funky because of
     #http://flask.pocoo.org/docs/0.10/security/#json-security
     return jsonify({"all_flags": flags})
+
+
+@app.errorhandler(400)
+def custom400(error):
+    response = jsonify({'message': error.description})
+    response.status_code = 404
+    response.status = 'error.Bad Request'
+    return response
 
 
 if __name__ == "__main__":
