@@ -254,6 +254,29 @@ def fire_email(msg, from_email):
     s.quit()
 
 
+def create_ticket(user, subject, message, headers=None, cc=None):
+
+    #TODO this function is getting too big, break it up
+    """
+    Create a ticket
+    """
+
+    # TODO paramaterize testtrouble for eventual migration
+    # to real snot
+    to = 'testtrouble@cat.pdx.edu'
+
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+    msg['From']    = user
+    msg['To']      = to
+
+    if headers is not None:
+        for k,v in headers.iteritems():
+            msg['key'] = v
+
+    fire_email(msg, user)
+    return msg
+
 if __name__ == "__main__":
     #print update_ticket(267, 'nibz@cat.pdx.edu,cmurphy@cat.pdx.edu', from_email='blkperl@cat.pdx.edu', message='test lasers')
     #print stat_ticket(252)

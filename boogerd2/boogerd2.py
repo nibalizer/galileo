@@ -3,6 +3,8 @@
 import subprocess
 import pysnot
 
+import uuid
+
 
 from flask import Flask, abort, request, jsonify
 app = Flask(__name__)
@@ -134,6 +136,8 @@ def ticket_update(ticket_number):
     to = data.get('to')
     subject = data.get('subject')
     message = data.get('message')
+    if '@' not in user:
+        abort(400, "You must specify an email address")
     if message is None:
         abort(400, "You must specify a message")
 
@@ -145,6 +149,35 @@ def ticket_update(ticket_number):
 
     #TODO: unpack this a bit
     return jsonify({"message": str(msg)})
+
+
+@app.route("/v1/ticket/create", methods=['POST'])
+def ticket_create():
+    ticket_uuid = uuid.uuid4()
+    data = request.get_json(force=True)
+    user = data.get('user')
+    cc = data.get('cc')
+    subject = data.get('subject')
+    message = data.get('message')
+    if '@' not in user:
+        abort(400, "You must specify an email address")
+    if message is None:
+        abort(400, "You must specify a message")
+    if subject is None:
+        abort(400, "You must specify a subject")
+
+    headers = {'X-Boogerd-UUID':
+        'X-Boogerd-UUID: {0}'.format(str(ticket_uuid))}
+
+    msg = pysnot.create_ticket(user=user,
+                               subject=subject,
+                               message=message,
+                               headers=headers)
+
+    #TODO: unpack this a bit
+    return jsonify({"uuid": str(ticket_uuid),
+                    "extra_info": "ask snotrocket",
+                    "message": str(msg)})
 
 
 
