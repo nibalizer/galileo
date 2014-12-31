@@ -115,6 +115,18 @@ def ticket_assign(ticket_number):
         abort(400, "Failed for unknown reasons")
 
 
+@app.route("/v1/ticket/<int:ticket_number>/close", methods=['POST'])
+def ticket_close(ticket_number):
+    assigned = pysnot.get_assigned(ticket_number)
+    if assigned is None:
+        assigned = 'nobody@cat.pdx.edu'
+
+    msg = pysnot.resolve_ticket(ticket_number, assigned)
+
+    #TODO: unpack this a bit
+    return jsonify({"message": str(msg)})
+
+
 @app.route("/v1/ticket/<int:ticket_number>/update", methods=['POST'])
 def ticket_update(ticket_number):
     data = request.get_json(force=True)

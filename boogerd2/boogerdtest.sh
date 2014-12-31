@@ -127,6 +127,46 @@ fi
 
 curl -s -XPOST -d '{ "user": "nibz@cat.pdx.edu" }' $boogerd_url/v1/ticket/247/assign >/dev/null
 
+#ticket 259
+#post an update
+#confirm that it is open
+#close it
+#confirm that it is closed
+
+if curl -s -XPOST -d '{ "message": "I am groot", "user": "nibz@cat.pdx.edu" }' $boogerd_url/v1/ticket/259/update | grep 'groot'  >/dev/null
+then
+  echo -n .
+else
+  echo "TEST 11.1 failed"
+  exit 1
+fi
+sleep 5
+
+if curl -s $boogerd_url/v1/ticket/259/metadata | jq ".status" | grep 'open'  >/dev/null
+then
+  echo -n .
+else
+  echo "TEST 11.2 failed"
+  exit 1
+fi
+
+if curl -s -XPOST $boogerd_url/v1/ticket/259/close | grep 'Completing ticket #259'  >/dev/null
+then
+  echo -n .
+else
+  echo "TEST 11.3 failed"
+  exit 1
+fi
+
+sleep 5
+if curl -s $boogerd_url/v1/ticket/259/metadata | jq ".status" | grep 'completed'  >/dev/null
+then
+  echo -n .
+else
+  echo "TEST 11.4 failed"
+  exit 1
+fi
+
 
 echo ""
 echo "All tests pass!"

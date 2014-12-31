@@ -183,22 +183,12 @@ def resolve_ticket_silent(ticket_number):
         return False
 
 
-def fire_email(msg, from_email):
-    """
-    Fire an email with smtplib
-    """
-    s = smtplib.SMTP('localhost')
-    s.sendmail(from_email, [msg['To']], msg.as_string())
-    s.quit()
-
-
-def resolve_ticket(number, from_email, config, message=None):
+def resolve_ticket(number, from_email, message=None):
 
     """
     Send an email to resolve a ticket
     Stolen from underscore by Prill
     """
-    # to = config['snot']['snotEmail']
     to = 'testtrouble@cat.pdx.edu'
 
     msg = MIMEText(message)
@@ -209,7 +199,7 @@ def resolve_ticket(number, from_email, config, message=None):
 
     fire_email(msg, from_email)
 
-    return True
+    return msg
 
 
 def update_ticket(ticket_number,
@@ -253,6 +243,15 @@ def update_ticket(ticket_number,
 
     fire_email(msg, user)
     return msg
+
+
+def fire_email(msg, from_email):
+    """
+    Fire an email with smtplib
+    """
+    s = smtplib.SMTP('localhost')
+    s.sendmail(from_email, [msg['To']], msg.as_string())
+    s.quit()
 
 
 if __name__ == "__main__":
