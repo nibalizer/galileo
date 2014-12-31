@@ -166,8 +166,7 @@ def ticket_create():
     if subject is None:
         abort(400, "You must specify a subject")
 
-    headers = {'X-Boogerd-UUID':
-        'X-Boogerd-UUID: {0}'.format(str(ticket_uuid))}
+    headers = {'X-Boogerd-UUID': '{0}'.format(str(ticket_uuid))}
 
     msg = pysnot.create_ticket(user=user,
                                subject=subject,

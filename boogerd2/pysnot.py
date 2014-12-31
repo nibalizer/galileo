@@ -272,7 +272,7 @@ def create_ticket(user, subject, message, headers=None, cc=None):
 
     if headers is not None:
         for k,v in headers.iteritems():
-            msg['key'] = v
+            msg[k] = v
 
     fire_email(msg, user)
     return msg
