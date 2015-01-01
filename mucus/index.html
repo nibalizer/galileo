@@ -9,9 +9,19 @@ a.test {
 <meta charset="utf-8">
 <title>Demo</title>
 </head>
+<h1>Mucus frontend for the SNOT ticket tracking system</h1>
+<h1><div id=numOpen></div></h1>
 <body>
 <a href="http://jquery.com/">jQuery</a>
 <script src="jquery.js"></script>
+ <table style="width:100%" id="ticketTable">
+  <tr>
+    <th>Number</th>
+    <th>From</th>
+    <th>Date</th>
+    <th>Subject</th>
+  </tr>
+</table>
 <script>
 // Your code goes here.
 $( document ).ready(function() {
@@ -22,10 +32,20 @@ $( document ).ready(function() {
     });
     $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         console.log( response ); // server response
-        $( "<h1>" ).text( response.total ).appendTo( "body" );
+        $( "<h1>" ).text( response.total ).appendTo( "<div id=numOpen>" );
+        var tickets = [];
+        var ticketTable = $( "#ticketTable" );
         for (i = 0; i < response.tickets.length; i++) {
-            $( "<div id=response.tickets[i].number class=\"content\">").text( response.tickets[i].number + " " + response.tickets[i].subject ).appendTo( "body" );
+            var tdLine = '<tr>'
+            tdLine += "<td>" + response.tickets[i].number + "</td>"
+            tdLine += "<td>" + response.tickets[i].from_line + "</td>"
+            tdLine += "<td>" + response.tickets[i].subject + "</td>"
+            tdLine += "<td>" + response.tickets[i].flags + "</td>"
+            tdLine += "</tr>"
+
+            tickets.push( tdLine );
         }
+        ticketTable.append( tickets.join( "" ) );
     });
 });
 </script>
