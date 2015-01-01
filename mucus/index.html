@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<style>
+a.test {
+    font-weight: bold;
+}
+</style>
+<meta charset="utf-8">
+<title>Demo</title>
+</head>
+<body>
+<a href="http://jquery.com/">jQuery</a>
+<script src="jquery.js"></script>
+<script>
+// Your code goes here.
+$( document ).ready(function() {
+    $( "a" ).addClass( "test" );
+    $( "a" ).click(function( event ) {
+        event.preventDefault();
+        $( this ).hide( "slow" );
+    });
+    $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
+        console.log( response ); // server response
+        $( "<h1>" ).text( response.total ).appendTo( "body" );
+        for (i = 0; i < response.tickets.length; i++) {
+            $( "<div id=response.tickets[i].number class=\"content\">").text( response.tickets[i].number + " " + response.tickets[i].subject ).appendTo( "body" );
+        }
+    });
+});
+</script>
+</body>
+</html>
