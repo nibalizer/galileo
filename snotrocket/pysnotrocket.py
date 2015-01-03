@@ -25,7 +25,7 @@ def get_ticket_by_number(ticket_number):
 
 
 def get_open_tickets(index_from=0, size=20):
-    res = es.search(index=es_index, body={"sort": [ {"number": "asc" }], "from": index_from, "size": size, "query": {"match": {"status": "open"}}})
+    res = es.search(index=es_index, body={"sort": [ {"number": "desc" }], "from": index_from, "size": size, "query": {"match": {"status": "open"}}})
     #print("Got %d Hits:" % res['hits']['total'])
     tickets = [i['_source'] for i in res['hits']['hits'] ]
     number_responses = res['hits']['total']
