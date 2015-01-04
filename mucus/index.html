@@ -18,6 +18,11 @@
 a.test {
     font-weight: bold;
 }
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    /* TODO: pick better colors */
+      background-color: cornflowerblue;
+}
 </style>
 <meta charset="utf-8">
 <title>Demo</title>
@@ -83,7 +88,7 @@ a.test {
   <div class="panel-body">
     <p>SNOT Open queue</p>
   </div>
-  <table class="table table-striped" style="width:100%" id="ticketTable">
+  <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
     <tr>
       <th>Number</th>
       <th>From</th>
