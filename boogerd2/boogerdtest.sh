@@ -24,7 +24,7 @@ else
   exit 1
 fi
 
-if curl -s $boogerd_url/v1/ticket/247 | grep 'NUMBER:        247' >/dev/null
+if curl -s $boogerd_url/v1/ticket/281 | grep 'Sun, 11 Jan 2015' >/dev/null
 then
   echo -n .
 else

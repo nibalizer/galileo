@@ -8,6 +8,7 @@ import smtplib
 
 import snotparser.snotparser as sp
 
+snot_admin_divider = "XXXXXXXXXXXXXXXXXX  Administrative Information Follows  XXXXXXXXXXXXXXXXXXXXXX"
 
 class TicketNotFoundException(Exception):
     pass
@@ -28,9 +29,10 @@ def stat_ticket(ticket_number):
     Test for existence of a ticket
     The basis for validate_existence
     """
-    subproc = subprocess.Popen(['testsnot', '-l', str(ticket_number)], stdout=subprocess.PIPE)
+    subproc = subprocess.Popen(['testsnot', '-s', str(ticket_number)], stdout=subprocess.PIPE)
     response, err  = subproc.communicate()
-    if response == "":
+    error_msg = "Cannot open ticket {0}".format(ticket_number)
+    if error_msg in response:
         return False
     else:
         return True
@@ -39,7 +41,7 @@ def stat_ticket(ticket_number):
 def get_ticket(ticket_number):
     subproc = subprocess.Popen(['testsnot', '-s', str(ticket_number)], stdout=subprocess.PIPE)
     tic, err = subproc.communicate()
-    return tic
+    return tic.split(snot_admin_divider)[0]
 
 
 def get_ticket_raw(ticket_number):
@@ -279,7 +281,7 @@ def create_ticket(user, subject, message, headers=None, cc=None):
 
 if __name__ == "__main__":
     #print update_ticket(267, 'nibz@cat.pdx.edu,cmurphy@cat.pdx.edu', from_email='blkperl@cat.pdx.edu', message='test lasers')
-    #print stat_ticket(252)
+    print stat_ticket(252)
     #print get_assigned(11440)
     #print datetime.datetime.now()
     #print assign_ticket_with_validation('257', 'nibz')
@@ -292,7 +294,7 @@ if __name__ == "__main__":
     #print resolve_ticket(266, 'blkperl@cat.pdx.edu', None)
     #print get_history(137)
     #print get_emails_involved(267)
-    print update_ticket(267, message="Do thing with the stuff")
+    #print update_ticket(267, message="Do thing with the stuff")
 
 
 
