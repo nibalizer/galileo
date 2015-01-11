@@ -144,9 +144,14 @@ $('#ticketTable').on("click", "tr", function() {
         var content_prettied = '<div class="well well-lg">'
         content_prettied += content.replace(/\n/g,'<br>');
         content_prettied += '</div>'
-        console.log(content_prettied)
         $( "div.panel-content" ).html( '<p>' + content_prettied + ticket_metadata + '</p>' );
         $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
+        if (response['status'] == 'open') {
+            $( ".panel" ).addClass('panel-success');
+        } else {
+            $( ".panel" ).addClass('panel-warning');
+        }
+
     });
 
 });
