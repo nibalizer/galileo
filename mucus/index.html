@@ -39,7 +39,7 @@ a.test {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Mucus</a>
+      <a class="navbar-brand listopen" href="#">Mucus</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,7 +47,7 @@ a.test {
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
         <li id="clear"><a href="#">Clear</a></li>
-        <li id="open"><a href="#">Open Tickets</a></li>
+        <li class="listopen"><a href="#">Open Tickets</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -126,7 +126,7 @@ $( "#clear" ).click(function() {
     $( "div.panel-content" ).html( '' );
     $( "#ticketTable" ).html( '' );
 });
-$( "#open" ).click(function() {
+$( ".listopen" ).click(function() {
     $( "#ticketTable" ).html( '' );
     openTix();
 });
