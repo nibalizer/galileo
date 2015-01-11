@@ -90,42 +90,14 @@ a.test {
   <div class="panel-body">
   </div>
   <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
-    <tr>
-      <th>Number</th>
-      <th>From</th>
-      <th>Subject</th>
-      <th>Date</th>
-      <th>Flags</th>
-    </tr>
   </table>
 </div>
 
 <script>
 // Your code goes here.
-$( document ).ready(function() {
+openTix = function(){
     $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         $( ".panel-heading" ).text( response.total + " Open Tickets" );
-        var tickets = [];
-        var ticketTable = $( "#ticketTable" );
-        for (i = 0; i < response.tickets.length; i++) {
-            var tdLine = '<tr id="ticketClick">'
-            tdLine += "<td id='ticketNumber'>" + response.tickets[i].number + "</td>"
-            tdLine += "<td>" + response.tickets[i].from_line + "</td>"
-            tdLine += "<td>" + response.tickets[i].subject + "</td>"
-            tdLine += "<td>" + response.tickets[i].last_update + "</td>"
-            tdLine += "<td>" + response.tickets[i].flags + "</td>"
-            tdLine += "</tr>"
-
-            tickets.push( tdLine );
-        }
-        ticketTable.append( tickets.join( "" ) );
-    });
-});
-$( "#clear" ).click(function() {
-    $( "#ticketTable" ).html( '' );
-});
-$( "#open" ).click(function() {
-    $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         var tickets = [];
         var ticketTable = $( "#ticketTable" );
         var headers = "<tr> <th>Number</th> <th>From</th> <th>Subject</th> <th>Date</th> <th>Flags</th> </tr> ";
@@ -143,6 +115,16 @@ $( "#open" ).click(function() {
         }
         ticketTable.append( headers + tickets.join( "" ) );
     });
+};
+$( document ).ready(function() {
+    openTix();
+});
+$( "#clear" ).click(function() {
+    $( "#ticketTable" ).html( '' );
+});
+$( "#open" ).click(function() {
+    $( "#ticketTable" ).html( '' );
+    openTix();
 });
 </script>
 </body>
