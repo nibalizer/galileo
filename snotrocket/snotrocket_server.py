@@ -18,12 +18,16 @@ def hello():
 @app.route("/v1/tickets/number/<int:number>")
 def get_ticket_number(number):
     resp = pysnotrocket.get_ticket_by_number(number)
+    content = pysnotrocket.get_ticket_content(number)
+    resp['content'] = content
     return jsonify(resp)
 
 
 @app.route("/v1/tickets/uuid/<uuid>")
 def get_ticket_uuid(uuid):
     resp = pysnotrocket.get_ticket_by_uuid(uuid)
+    content = pysnotrocket.get_ticket_content(resp['number'])
+    resp['content'] = content
     return jsonify(resp)
 
 
