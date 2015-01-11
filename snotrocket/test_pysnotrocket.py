@@ -23,5 +23,6 @@ assert(uuid_tic['from_line'] == 'nibz@cat.pdx.edu')
 num_tickets, tickets = get_open_tickets()
 assert(len(tickets) == 20)
 assert(num_tickets > 100)
+assert("krum@cecs.pdx.edu" in get_ticket_content(281))
 
 

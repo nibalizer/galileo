@@ -24,6 +24,17 @@ def get_ticket_by_number(ticket_number):
     return res['hits']['hits'][0]['_source']
 
 
+def get_ticket_content(ticket_number):
+    """
+    You'll have to use the ticket number here
+    """
+    res = es.get(index=es_index, doc_type='snot-ticket-content', id="{0}-content".format(ticket_number))
+    if res is None:
+        print "Failed to find ticket"
+        return False
+    return res['_source']['content']
+
+
 def get_open_tickets(index_from=0, size=20):
     res = es.search(index=es_index, body={"sort": [ {"number": "desc" }], "from": index_from, "size": size, "query": {"match": {"status": "open"}}})
     #print("Got %d Hits:" % res['hits']['total'])
@@ -35,4 +46,5 @@ def get_open_tickets(index_from=0, size=20):
 if __name__ == "__main__":
     #print get_ticket_by_uuid('8449fae6-f97d-43b1-8c51-cb6c87990b11')
     #print get_ticket_by_number(247)
-    print get_open_tickets()
+    #print get_open_tickets()
+    print get_ticket_content(281)
