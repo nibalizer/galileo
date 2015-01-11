@@ -90,12 +90,14 @@ a.test {
   <div class="panel-body">
     <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
     </table>
+    <div class="panel-content"></div>
   </div>
 </div>
 
 <script>
 // Your code goes here.
 openTix = function(){
+    $( "div.panel-content" ).html( '' );
     $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         $( ".panel-heading" ).text( response.total + " Open Tickets" );
         var tickets = [];
@@ -120,6 +122,7 @@ $( document ).ready(function() {
     openTix();
 });
 $( "#clear" ).click(function() {
+    $( "div.panel-content" ).html( '' );
     $( "#ticketTable" ).html( '' );
 });
 $( "#open" ).click(function() {
@@ -127,7 +130,9 @@ $( "#open" ).click(function() {
     openTix();
 });
 $('#ticketTable').on("click", "tr", function() {
-    alert('science');
+    $( "#ticketTable" ).html( '' );
+    $( "div.panel-content" ).html( '<p>Hi</p>' );
+
 });
 </script>
 </body>
