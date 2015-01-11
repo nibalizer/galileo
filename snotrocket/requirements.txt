@@ -1,5 +1,13 @@
+Flask==0.10.1
+Flask-Cors==1.10.2
+Jinja2==2.7.3
+MarkupSafe==0.23
+Werkzeug==0.9.6
 argparse==1.2.1
 elasticsearch==1.2.0
+getent==0.2
+itsdangerous==0.24
+six==1.8.0
 tailer==0.3
 urllib3==1.10
 wsgiref==0.1.2
