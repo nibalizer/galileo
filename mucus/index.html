@@ -25,7 +25,7 @@ a.test {
 }
 </style>
 <meta charset="utf-8">
-<title>Demo</title>
+<title>Mucus</title>
 </head>
 <body>
 
@@ -88,14 +88,17 @@ a.test {
   <!-- Default panel contents -->
   <div class="panel-heading">Panel heading</div>
   <div class="panel-body">
+    <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
+    </table>
+    <div class="panel-content"></div>
   </div>
-  <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
-  </table>
 </div>
 
 <script>
-// Your code goes here.
+// everything on one page
+// all modern n stuff
 openTix = function(){
+    $( "div.panel-content" ).html( '' );
     $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         $( ".panel-heading" ).text( response.total + " Open Tickets" );
         var tickets = [];
@@ -120,11 +123,26 @@ $( document ).ready(function() {
     openTix();
 });
 $( "#clear" ).click(function() {
+    $( "div.panel-content" ).html( '' );
     $( "#ticketTable" ).html( '' );
 });
 $( "#open" ).click(function() {
     $( "#ticketTable" ).html( '' );
     openTix();
+});
+$('#ticketTable').on("click", "tr", function() {
+    $( "#ticketTable" ).html( '' );
+    var ticketNumber = $(this).find("td").html();
+    $.get( "http://localhost:5001/v1/tickets/number/" + ticketNumber, function( response ) {
+
+        var ticket_metadata = "";
+        for (var key in response) {
+            ticket_metadata += key + " " + response[key] + "<br>";
+        }
+        $( "div.panel-content" ).html( '<p>' + ticket_metadata + '</p>' );
+        $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
+    });
+
 });
 </script>
 </body>
