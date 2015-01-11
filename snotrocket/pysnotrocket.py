@@ -10,17 +10,11 @@ es_index = 'snotrocket'
 
 def get_ticket_by_uuid(uuid):
     res = es.search(index=es_index, body={"query": {"match": {"boogerd_uuid": uuid }}})
-    print("Got %d Hits:" % res['hits']['total'])
-    for hit in res['hits']['hits']:
-            print hit['_source']['number']
     return res['hits']['hits'][0]['_source']
 
 
 def get_ticket_by_number(ticket_number):
     res = es.search(index=es_index, body={"query": {"match": {"number": ticket_number}}})
-    print("Got %d Hits:" % res['hits']['total'])
-    for hit in res['hits']['hits']:
-            print hit['_source']['number']
     return res['hits']['hits'][0]['_source']
 
 
