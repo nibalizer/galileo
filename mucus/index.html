@@ -135,11 +135,17 @@ $('#ticketTable').on("click", "tr", function() {
     var ticketNumber = $(this).find("td").html();
     $.get( "http://localhost:5001/v1/tickets/number/" + ticketNumber, function( response ) {
 
+        var content = response['content']
+        delete response['content']
         var ticket_metadata = "";
         for (var key in response) {
             ticket_metadata += key + " " + response[key] + "<br>";
-        }
-        $( "div.panel-content" ).html( '<p>' + ticket_metadata + '</p>' );
+        };
+        var content_prettied = '<div class="well well-lg">'
+        content_prettied += content.replace(/\n/g,'<br>');
+        content_prettied += '</div>'
+        console.log(content_prettied)
+        $( "div.panel-content" ).html( '<p>' + content_prettied + ticket_metadata + '</p>' );
         $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
     });
 
