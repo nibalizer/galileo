@@ -108,8 +108,8 @@ $( document ).ready(function() {
         var tickets = [];
         var ticketTable = $( "#ticketTable" );
         for (i = 0; i < response.tickets.length; i++) {
-            var tdLine = '<tr>'
-            tdLine += "<td>" + response.tickets[i].number + "</td>"
+            var tdLine = '<tr id="ticketClick">'
+            tdLine += "<td id='ticketNumber'>" + response.tickets[i].number + "</td>"
             tdLine += "<td>" + response.tickets[i].from_line + "</td>"
             tdLine += "<td>" + response.tickets[i].subject + "</td>"
             tdLine += "<td>" + response.tickets[i].last_update + "</td>"
@@ -122,14 +122,13 @@ $( document ).ready(function() {
     });
 });
 $( "#clear" ).click(function() {
-    console.log( "You clicked a paragraph!" );
     $( "#ticketTable" ).html( '' );
 });
 $( "#open" ).click(function() {
     $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
         var tickets = [];
         var ticketTable = $( "#ticketTable" );
-        ticketTable.append(" <tr> <th>Number</th> <th>From</th> <th>Subject</th> <th>Date</th> <th>Flags</th> </tr> ");
+        var headers = "<tr> <th>Number</th> <th>From</th> <th>Subject</th> <th>Date</th> <th>Flags</th> </tr> ";
 
         for (i = 0; i < response.tickets.length; i++) {
             var tdLine = '<tr>'
@@ -142,7 +141,7 @@ $( "#open" ).click(function() {
 
             tickets.push( tdLine );
         }
-        ticketTable.append( tickets.join( "" ) );
+        ticketTable.append( headers + tickets.join( "" ) );
     });
 });
 </script>
