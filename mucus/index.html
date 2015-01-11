@@ -132,7 +132,16 @@ $( "#open" ).click(function() {
 });
 $('#ticketTable').on("click", "tr", function() {
     $( "#ticketTable" ).html( '' );
-    $( "div.panel-content" ).html( '<p>Hi</p>' );
+    var ticketNumber = $(this).find("td").html();
+    $.get( "http://localhost:5001/v1/tickets/number/" + ticketNumber, function( response ) {
+
+        var ticket_metadata = "";
+        for (var key in response) {
+            ticket_metadata += key + " " + response[key] + "<br>";
+        }
+        $( "div.panel-content" ).html( '<p>' + ticket_metadata + '</p>' );
+        $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
+    });
 
 });
 </script>
