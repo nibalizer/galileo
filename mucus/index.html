@@ -116,6 +116,7 @@ openTix = function(){
 
             tickets.push( tdLine );
         }
+        $( "#ticketTable" ).html( '' );
         ticketTable.append( headers + tickets.join( "" ) );
     });
 };
@@ -127,7 +128,6 @@ $( "#clear" ).click(function() {
     $( "#ticketTable" ).html( '' );
 });
 $( ".listopen" ).click(function() {
-    $( "#ticketTable" ).html( '' );
     openTix();
 });
 $('#ticketTable').on("click", "tr", function() {
