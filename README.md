@@ -30,7 +30,7 @@ Four parts:
     uses elasticsearch for cache
 
 
-3) ???: presentation layer, how make wobsite
+3) Mucus: presentation layer: A website to present snot info and users to perform operations
 
 
 4) pysnot: a library exposing common snot operations as python functions
