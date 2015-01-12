@@ -137,14 +137,19 @@ $('#ticketTable').on("click", "tr", function() {
 
         var content = response['content']
         delete response['content']
-        var ticket_metadata = "";
+        var ticket_metadata = '<ul class="list-group">'
         for (var key in response) {
-            ticket_metadata += key + " " + response[key] + "<br>";
+            if (response[key] == '') continue;
+            ticket_metadata += '<li class="list-group-item col-md-4">' + key;
+            ticket_metadata += '<span class="badge">' + response[key] + '</span>';
+            ticket_metadata += '</li>';
+
         };
-        var content_prettied = '<div class="well well-lg">'
+        ticket_metadata += '</ul><br>';
+        var content_prettied = '<div class="well well-lg">';
         content_prettied += content.replace(/\n/g,'<br>');
-        content_prettied += '</div>'
-        $( "div.panel-content" ).html( '<p>' + content_prettied + ticket_metadata + '</p>' );
+        content_prettied += '</div>';
+        $( "div.panel-content" ).html( '<p>' + ticket_metadata + content_prettied + '</p>' );
         $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
         if (response['status'] == 'open') {
             $( ".panel" ).addClass('panel-success');
