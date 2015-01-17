@@ -74,7 +74,10 @@ def username(name):
     """
     return getent info and snotsig
     """
-    passwd = dict(getent.passwd(name))
+    try:
+        passwd = dict(getent.passwd(name))
+    except TypeError:
+        abort(400, "Invalid user")
     snotsig_path = '/home/{0}/solaris/.snotsig'.format(name)
     sig_path = '/home/{0}/solaris/.snotsig'.format(name)
     if os.path.isfile(snotsig_path):
