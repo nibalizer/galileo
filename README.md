@@ -63,8 +63,23 @@ Nothing special is meant by the name galileo, it was unique and random. Subproje
 
 
 
+Development
+-----------
+
+
+If you just want to hack on mucus. Do this:
+
+ssh -L 5001:localhost:5001 rita.cat.pdx.edu
+firefox mucus/index.html
+
+
+Hacking on the daemons, youll probably have to run them...
+
+
+
 Contributing
 ------------
 
 
 This project is in serious need of help. To find tasks you can ask on irc or git grep TODO. For contribution processes, read CONTRIBUTING.
+
