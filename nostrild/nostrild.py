@@ -1,6 +1,8 @@
 # nostrild
 # authentication daemon
 
+import ldap
+
 import yaml
 
 from itsdangerous import TimestampSigner
@@ -10,7 +12,6 @@ app = Flask(__name__)
 
 def always_auth():
     req = request.get_json(force=True)
-    print req
     if req['user'] is None:
         abort(400, "You must specify a user")
     if req['password'] is None:
@@ -19,6 +20,35 @@ def always_auth():
     secret = s.sign(req['user'])
     return secret
 
+
+def ldap_auth():
+
+  req = request.get_json(force=True)
+  if req['user'] is None:
+      abort(400, "You must specify a user")
+  if req['password'] is None:
+      abort(400, "You must specify a password")
+
+  con = ldap.initialize("ldap://openldap.cat.pdx.edu")
+  con.start_tls_s()
+
+  try:
+    dn = "uid={0},{1}".format(req['user'], conf['search_scope'])
+    pw = "{0}".format(req['password'])
+    con.simple_bind_s( dn, pw )
+    success = True
+
+  except:
+    success = False
+
+  finally:
+    con.unbind()
+
+  if success:
+    secret = s.sign(req['user'])
+    return secret
+  else:
+    abort(400, "Invalid username or password")
 
 
 @app.route("/")
