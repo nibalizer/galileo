@@ -8,14 +8,7 @@ from flask import Flask, abort, request, jsonify
 app = Flask(__name__)
 
 
-
-@app.route("/")
-def hello():
-    return "nostrild: authentication for snot"
-
-
-@app.route("/auth", methods = ["POST"])
-def auth():
+def always_auth():
     req = request.get_json(force=True)
     print req
     if req['user'] is None:
@@ -24,6 +17,21 @@ def auth():
         abort(400, "You must specify a password")
 
     secret = s.sign(req['user'])
+    return secret
+
+
+
+@app.route("/")
+def hello():
+    return "nostrild: authentication for snot"
+
+
+@app.route("/auth", methods = ["POST"])
+def auth():
+    if conf['auth_scheme'] == 'always':
+        secret = always_auth()
+    elif conf['auth_scheme'] == 'ldap':
+        secret = ldap_auth()
 
     return jsonify({"secret_key": secret,
             "timeout": conf['auth_timeout']})
