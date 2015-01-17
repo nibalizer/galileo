@@ -14,3 +14,11 @@ cryptographically signed strings which can be used to authenticate
 requests against other daemons
 
 
+
+
+
+notes
+-----
+
+
+python-ldap requires libsasl2-dev
