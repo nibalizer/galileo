@@ -1,4 +1,5 @@
 **/**/*.pyc
+**/**/config.yaml
 venv
 *.swp
 boogerd2/snotparser
