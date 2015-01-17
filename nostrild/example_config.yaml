@@ -1,0 +1,5 @@
+---
+port: 5003
+auth_timeout: 1500
+ldap_server: 'ldapserver'
+secret_key: 'secretstring'
