@@ -23,8 +23,10 @@ def auth():
     if req['password'] is None:
         abort(400, "You must specify a password")
 
+    secret = s.sign(req['user'])
 
-    return 'yes'
+    return jsonify({"secret_key": secret,
+            "timeout": conf['auth_timeout']})
 
 
 
