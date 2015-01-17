@@ -1,8 +1,12 @@
 # nostrild
 # authentication daemon
 
+import yaml
+
+from itsdangerous import TimestampSigner
 from flask import Flask, abort, request, jsonify
 app = Flask(__name__)
+
 
 
 @app.route("/")
@@ -12,4 +16,8 @@ def hello():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    with open('config.yaml') as f:
+        conf = yaml.load(f.read())
+    f.closed
+
+    app.run(debug=True, port=conf['port'])
