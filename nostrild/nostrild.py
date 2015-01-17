@@ -1,9 +1,11 @@
 # nostrild
-# authentication daemon
+# authentication and user info daemon
 
-import ldap
+import getent
+import os
 
 import yaml
+import ldap
 
 from itsdangerous import TimestampSigner
 from flask import Flask, abort, request, jsonify
@@ -66,6 +68,27 @@ def auth():
     return jsonify({"secret_key": secret,
             "timeout": conf['auth_timeout']})
 
+
+@app.route("/user/<name>")
+def username(name):
+    """
+    return getent info and snotsig
+    """
+    passwd = dict(getent.passwd(name))
+    snotsig_path = '/home/{0}/solaris/.snotsig'.format(name)
+    sig_path = '/home/{0}/solaris/.snotsig'.format(name)
+    if os.path.isfile(snotsig_path):
+        with open(snotsig_path) as f:
+            snotsig = f.read()
+        f.closed
+    elif os.path.isfile(sig_path):
+        with open(sig_path) as f:
+            snotsig = f.read()
+        f.closed
+    #TODO check linux homedir as well
+    else:
+        snotsig = ""
+    return jsonify({"passwd": passwd, "snotsig": snotsig})
 
 
 if __name__ == "__main__":
