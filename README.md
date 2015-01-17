@@ -22,19 +22,49 @@ Subprojects
 Four parts:
 
 
-1) boogerd2: application to expose snot operations through REST
-   version 2 because kennobaka wrote version 1
+boogerd2
+--------
 
 
-2) snotrocket: an application to speed up read and search operations
-    uses elasticsearch for cache
+application to expose snot operations through REST
+
+version 2 because kennobaka wrote version 1
 
 
-3) Mucus: presentation layer: A website to present snot info and users to perform operations
+
+snotrocket
+----------
+
+an application to speed up read and search operations
+
+uses elasticsearch for cache
 
 
-4) pysnot: a library exposing common snot operations as python functions
 
+Mucus
+-----
+
+presentation layer: A website to present snot info and users to perform operations
+
+uses jquery and ajax to make a "one page" app
+
+
+
+
+pysnot
+------
+
+
+a library exposing common snot operations as python functions
+
+
+
+nostrild
+--------
+
+
+an authentication and user information daemon
+can provide authentication keys that can be used to hit other services
 
 
 
