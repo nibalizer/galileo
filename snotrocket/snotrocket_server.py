@@ -11,10 +11,11 @@ app = Flask(__name__)
 cors = CORS(app)
 
 def verify_auth():
-    try:
-        s.unsign(request.headers['X-SNOT-Auth-Key'], max_age=1500)
-    except:
-        abort(401)
+    if conf['verify_auth']:
+        try:
+            s.unsign(request.headers['X-SNOT-Auth-Key'], max_age=1500)
+        except:
+            abort(401)
 
 
 @app.route("/")

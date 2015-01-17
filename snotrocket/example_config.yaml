@@ -4,3 +4,4 @@ debug: false
 #secret key must match nostrild
 secret_key: 'secretstring'
 auth_timeout: 1500
+verify_auth: false
