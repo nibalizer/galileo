@@ -1,6 +1,7 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
+from itsdangerous import TimestampSigner
 
 import pysnotrocket
 
@@ -17,6 +18,11 @@ def hello():
 
 @app.route("/v1/tickets/number/<int:number>")
 def get_ticket_number(number):
+    print request.headers
+    try:
+        s.unsign(request.headers['X-SNOT-Auth-Key'], max_age=1500)
+    except:
+        abort(401)
     resp = pysnotrocket.get_ticket_by_number(number)
     content = pysnotrocket.get_ticket_content(number)
     resp['content'] = content
@@ -44,4 +50,5 @@ def find_open_tickets(index_from, size):
 
 
 if __name__ == "__main__":
+    s = TimestampSigner('secretstring')
     app.run(debug=True,port=5001)
