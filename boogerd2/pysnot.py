@@ -61,8 +61,14 @@ def get_history(ticket_number):
 
 
 def get_reply_to(ticket_number):
-    subproc = subprocess.Popen(['testsnot', '-m', str(ticket_number)], stdout=subprocess.PIPE)
+    subproc = subprocess.Popen(['testsnot', '-m', str(ticket_number)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     reply_to_string, err  = subproc.communicate()
+    if "Cannot locate message id" in err:
+        subproc = subprocess.Popen(['testsnot', '-U', str(ticket_number)], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        response = subproc.communicate('y\n')
+        subproc = subprocess.Popen(['testsnot', '-m', str(ticket_number)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        reply_to_string, err  = subproc.communicate()
+        return reply_to_string.split()[1]
     return reply_to_string.split()[1]
 
 
@@ -281,7 +287,7 @@ def create_ticket(user, subject, message, headers=None, cc=None):
 
 if __name__ == "__main__":
     #print update_ticket(267, 'nibz@cat.pdx.edu,cmurphy@cat.pdx.edu', from_email='blkperl@cat.pdx.edu', message='test lasers')
-    print stat_ticket(252)
+    #print stat_ticket(252)
     #print get_assigned(11440)
     #print datetime.datetime.now()
     #print assign_ticket_with_validation('257', 'nibz')
@@ -295,6 +301,7 @@ if __name__ == "__main__":
     #print get_history(137)
     #print get_emails_involved(267)
     #print update_ticket(267, message="Do thing with the stuff")
+    print get_reply_to(259)
 
 
 
