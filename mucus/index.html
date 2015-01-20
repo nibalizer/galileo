@@ -181,6 +181,26 @@ $( "#loginlogout" ).click(function() {
   $( "#dialog" ).dialog({modal: true});
 
 });
+// Flag tickets
+$( ".panel-content" ).on("click", "button", function() {
+        $( "#responsearea" ).html('\
+        <div class="jumbotron">\
+          <div class="input-group">\
+          <span class="input-group-btn">\
+          <button class="btn btn-default" type="button">Flag</button>\
+          </span>\
+          <input type="text" class="form-control" placeholder="UNIX,WINTEL">\
+          </div>\
+        </div>');
+});
+//$(function() {
+//   $( "button" )
+//   .button()
+//   .click(function( event ) {
+//     event.preventDefault();
+//     alert("Hoorah");
+//   });
+//});
 // Horribly named
 // This function fires when someone clicks on a row of the ticket table
 // It takes us to looking at just one ticket
@@ -204,21 +224,22 @@ $( "#ticketTable" ).on("click", "tr", function() {
             ticket_metadata += '</ul><br/>';
             ticket_metadata += '<div class="btn-group btn-group-justified" role="group" aria-label="...">';
             ticket_metadata += '  <div class="btn-group" role="group">';
-            ticket_metadata += '    <button type="button" class="btn btn-default">Refresh</button>';
+            ticket_metadata += '    <button id="buttonRefresh" type="button" class="btn btn-default">Refresh</button>';
             ticket_metadata += '  </div>';
             ticket_metadata += '  <div class="btn-group" role="group">';
-            ticket_metadata += '    <button type="button" class="btn btn-default">Close</button>';
+            ticket_metadata += '    <button id="buttonClose" type="button" class="btn btn-default">Close</button>';
             ticket_metadata += '  </div>';
             ticket_metadata += '  <div class="btn-group" role="group">';
-            ticket_metadata += '    <button type="button" class="btn btn-default">Reply</button>';
+            ticket_metadata += '    <button id="buttonReply" type="button" class="btn btn-default">Reply</button>';
             ticket_metadata += '  </div>';
             ticket_metadata += '  <div class="btn-group" role="group">';
-            ticket_metadata += '    <button type="button" class="btn btn-default">Assign</button>';
+            ticket_metadata += '    <button id="buttonAssign" type="button" class="btn btn-default">Assign</button>';
             ticket_metadata += '  </div>';
             ticket_metadata += '  <div class="btn-group" role="group">';
-            ticket_metadata += '    <button type="button" class="btn btn-default">Flag</button>';
+            ticket_metadata += '    <button id="buttonflag" type="button" class="btn btn-default">Flag</button>';
             ticket_metadata += '  </div>';
             ticket_metadata += '</div>';
+            ticket_metadata += '<div id="responsearea" class="container"></div>';
             var content_prettied = '<div class="well well-lg">';
             content_prettied += content.replace(/\n/g,'<br>');
             content_prettied += '</div>';
