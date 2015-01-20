@@ -5,3 +5,4 @@ auth_timeout: 1500
 ldap_server: 'ldapserver'
 secret_key: 'secretstring'
 search_scope: 'ou=users,dc=example,dc=com'
+debug: false

@@ -37,7 +37,7 @@ def ldap_auth():
   if req['password'] is None:
       abort(400, "You must specify a password")
 
-  con = ldap.initialize("ldap://openldap.cat.pdx.edu")
+  con = ldap.initialize("ldap://" + conf['ldap_server'])
   con.start_tls_s()
 
   try:
