@@ -183,29 +183,33 @@ $( "#loginlogout" ).click(function() {
 $( "#ticketTable" ).on("click", "tr", function() {
     $( "#ticketTable" ).html( '' );
     var ticketNumber = $(this).find("td").html();
-    $.get( "http://localhost:5001/v1/tickets/number/" + ticketNumber, function( response ) {
+    $.ajax({
+        url: "http://localhost:5001/v1/tickets/number/" + ticketNumber,
+        success: function( response ) {
 
-        var content = response['content']
-        delete response['content']
-        var ticket_metadata = '<ul class="list-group">'
-        for (var key in response) {
-            if (response[key] == '') continue;
-            ticket_metadata += '<li class="list-group-item col-md-4">' + key;
-            ticket_metadata += '<span class="badge">' + response[key] + '</span>';
-            ticket_metadata += '</li>';
+            var content = response['content']
+            delete response['content']
+            var ticket_metadata = '<ul class="list-group">'
+            for (var key in response) {
+                if (response[key] == '') continue;
+                ticket_metadata += '<li class="list-group-item col-md-4">' + key;
+                ticket_metadata += '<span class="badge">' + response[key] + '</span>';
+                ticket_metadata += '</li>';
 
-        };
-        ticket_metadata += '</ul><br>';
-        var content_prettied = '<div class="well well-lg">';
-        content_prettied += content.replace(/\n/g,'<br>');
-        content_prettied += '</div>';
-        $( "div.panel-content" ).html( '<p>' + ticket_metadata + content_prettied + '</p>' );
-        $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
-        if (response['status'] == 'open') {
-            $( ".panel" ).addClass('panel-success');
-        } else {
-            $( ".panel" ).addClass('panel-warning');
-        }
+            };
+            ticket_metadata += '</ul><br>';
+            var content_prettied = '<div class="well well-lg">';
+            content_prettied += content.replace(/\n/g,'<br>');
+            content_prettied += '</div>';
+            $( "div.panel-content" ).html( '<p>' + ticket_metadata + content_prettied + '</p>' );
+            $( ".panel-heading" ).text( "Ticket: " + ticketNumber + ": " + response.subject );
+            if (response['status'] == 'open') {
+                $( ".panel" ).addClass('panel-success');
+            } else {
+                $( ".panel" ).addClass('panel-warning');
+            }
+        },
+        headers: { "X-SNOT-Auth-Key": authentication_token }
 
     });
 
