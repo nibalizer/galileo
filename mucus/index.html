@@ -70,7 +70,7 @@ a.test {
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a id="showtoken" href="#">Show Token</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -78,7 +78,7 @@ a.test {
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li class="divider"></li>
-            <li><a href="#">Log In</a></li>
+            <li><a href="#">Do Something</a></li>
           </ul>
         </li>
         <li><a id="loginlogout" href="#">Log In</a></li>
@@ -118,6 +118,7 @@ a.test {
 
 <script>
 
+var authentication_token;
 // everything on one page
 // all modern n stuff
 openTix = function(){
@@ -152,6 +153,9 @@ $( "#clear" ).click(function() {
 });
 $( ".listopen" ).click(function() {
     openTix();
+});
+$( "#showtoken" ).click(function() {
+    alert('Your auth token is ' + authentication_token);
 });
 $( "#loginlogout" ).click(function() {
   $( "#loginform").removeClass('hidden');
@@ -189,15 +193,26 @@ $( "#ticketTable" ).on("click", "tr", function() {
 
 });
 $( "#loginform" ).submit(function( event ) {
-    //alert( "Handler for .submit() called." );
-    //var values = $('#myForm').serialize();
-    //console.log('derp');
-    //console.log(values);
+    event.preventDefault();
     var email = $( "#loginform input#inputEmail" ).val();
     console.log(email);
     var password = $( "#loginform input#inputPassword" ).val();
     console.log( password );
-    event.preventDefault();
+    var username = email.split('@')[0]; // oh god the hax #TODO fix this
+    $.ajax({
+        url: "http://localhost:5003/auth",
+        type: 'POST',
+        data: JSON.stringify({ user: email, password: password }) ,
+        contentType : 'application/json',
+        dataType: "json",
+        success: function( data ) {
+            console.log( data);
+            console.log( data.secret_key );
+            console.log( data.timeout );
+            authentication_token = data.secret_key;
+        }
+    });
+    $( "#dialog" ).dialog("close");
 });
 </script>
 </body>
