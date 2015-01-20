@@ -117,11 +117,16 @@ a.test {
 
 
 <script>
-
+// we store who we are
+// and our authentication token, in these global variables
 var authentication_token;
 var username;
+
 // everything on one page
 // all modern n stuff
+
+
+//view-like function to draw a list of open tickets on the main page
 openTix = function(){
     $( "div.panel-content" ).html( '' );
     $.ajax({
@@ -149,24 +154,32 @@ openTix = function(){
         headers: { "X-SNOT-Auth-Key": authentication_token }
     });
 };
+// This really doesn't fire well because authentication is required now
 $( document ).ready(function() {
     openTix();
 });
+// Clears screen, Mostly useful for debugging the view system, should probabaly be deleted
 $( "#clear" ).click(function() {
     $( "div.panel-content" ).html( '' );
     $( "#ticketTable" ).html( '' );
 });
+// Lists open tickets, essentially 'go back to main page'
 $( ".listopen" ).click(function() {
     openTix();
 });
+// Alerts with authentication information, again useful only for debugging
 $( "#showtoken" ).click(function() {
     alert('You are logged in as ' + username + '\nYour auth token is ' + authentication_token);
 });
+// Log in button, becomes user name after log in is successful
 $( "#loginlogout" ).click(function() {
   $( "#loginform").removeClass('hidden');
   $( "#dialog" ).dialog({modal: true});
 
 });
+// Horribly named
+// This function fires when someone clicks on a row of the ticket table
+// It takes us to looking at just one ticket
 $( "#ticketTable" ).on("click", "tr", function() {
     $( "#ticketTable" ).html( '' );
     var ticketNumber = $(this).find("td").html();
@@ -197,6 +210,8 @@ $( "#ticketTable" ).on("click", "tr", function() {
     });
 
 });
+// This function fires when the user hits log in on the login form
+// It logs in, get auth token, then takes us back to open tickets
 $( "#loginform" ).submit(function( event ) {
     event.preventDefault();
     var email = $( "#loginform input#inputEmail" ).val();
