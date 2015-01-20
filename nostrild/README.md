@@ -16,6 +16,22 @@ requests against other daemons
 
 
 
+usage
+-----
+
+
+curl -XPOST -d '{"user": "nibz", "password": "derp"}' /auth
+
+
+
+
+configuration
+-------------
+
+
+You can setup nostrild to bind to ldap, or to always allow authentication. See example_config.yaml for details. Your configuration will go in config.yaml
+
+
 
 notes
 -----
