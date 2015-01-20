@@ -119,6 +119,7 @@ a.test {
 <script>
 
 var authentication_token;
+var username;
 // everything on one page
 // all modern n stuff
 openTix = function(){
@@ -155,7 +156,7 @@ $( ".listopen" ).click(function() {
     openTix();
 });
 $( "#showtoken" ).click(function() {
-    alert('Your auth token is ' + authentication_token);
+    alert('You are logged in as ' + username + '\nYour auth token is ' + authentication_token);
 });
 $( "#loginlogout" ).click(function() {
   $( "#loginform").removeClass('hidden');
@@ -198,11 +199,11 @@ $( "#loginform" ).submit(function( event ) {
     console.log(email);
     var password = $( "#loginform input#inputPassword" ).val();
     console.log( password );
-    var username = email.split('@')[0]; // oh god the hax #TODO fix this
+    var user = email.split('@')[0]; // oh god the hax #TODO fix this
     $.ajax({
         url: "http://localhost:5003/auth",
         type: 'POST',
-        data: JSON.stringify({ user: email, password: password }) ,
+        data: JSON.stringify({ user: user, password: password }) ,
         contentType : 'application/json',
         dataType: "json",
         success: function( data ) {
@@ -210,9 +211,11 @@ $( "#loginform" ).submit(function( event ) {
             console.log( data.secret_key );
             console.log( data.timeout );
             authentication_token = data.secret_key;
+            username = user;
         }
     });
     $( "#dialog" ).dialog("close");
+    $( "#loginlogout" ).text("Logged in as: " + user );
 });
 </script>
 </body>
