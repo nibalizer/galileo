@@ -104,11 +104,13 @@ a.test {
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <!-- TODO: make "remember me" work
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
+        -->
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 </div>
@@ -187,8 +189,14 @@ $( "#ticketTable" ).on("click", "tr", function() {
 
 });
 $( "#loginform" ).submit(function( event ) {
-    alert( "Handler for .submit() called." );
-    console.log('derp');
+    //alert( "Handler for .submit() called." );
+    //var values = $('#myForm').serialize();
+    //console.log('derp');
+    //console.log(values);
+    var email = $( "#loginform input#inputEmail" ).val();
+    console.log(email);
+    var password = $( "#loginform input#inputPassword" ).val();
+    console.log( password );
     event.preventDefault();
 });
 </script>
