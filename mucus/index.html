@@ -2,6 +2,7 @@
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/vader/jquery-ui.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
 <!-- Optional theme -->
@@ -10,6 +11,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -76,9 +78,10 @@ a.test {
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#">Log In</a></li>
           </ul>
         </li>
+        <li><a id="loginlogout" href="#">Log In</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -94,7 +97,25 @@ a.test {
   </div>
 </div>
 
+<div id="dialog" title="Authenticate">
+      <form id="loginform" class="form-signin hidden">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+</div>
+
+
 <script>
+
 // everything on one page
 // all modern n stuff
 openTix = function(){
@@ -130,7 +151,12 @@ $( "#clear" ).click(function() {
 $( ".listopen" ).click(function() {
     openTix();
 });
-$('#ticketTable').on("click", "tr", function() {
+$( "#loginlogout" ).click(function() {
+  $( "#loginform").removeClass('hidden');
+  $( "#dialog" ).dialog({modal: true});
+
+});
+$( "#ticketTable" ).on("click", "tr", function() {
     $( "#ticketTable" ).html( '' );
     var ticketNumber = $(this).find("td").html();
     $.get( "http://localhost:5001/v1/tickets/number/" + ticketNumber, function( response ) {
@@ -159,6 +185,11 @@ $('#ticketTable').on("click", "tr", function() {
 
     });
 
+});
+$( "#loginform" ).submit(function( event ) {
+    alert( "Handler for .submit() called." );
+    console.log('derp');
+    event.preventDefault();
 });
 </script>
 </body>
