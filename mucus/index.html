@@ -211,6 +211,7 @@ $( "#loginform" ).submit(function( event ) {
         success: function( data ) {
             authentication_token = data.secret_key;
             username = user;
+            openTix();
         }
     });
     $( "#dialog" ).dialog("close");
