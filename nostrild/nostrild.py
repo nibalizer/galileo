@@ -9,7 +9,13 @@ import ldap
 
 from itsdangerous import TimestampSigner
 from flask import Flask, abort, request, jsonify
+from flask_cors import CORS
+
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
+
+
 
 
 def always_auth():
@@ -60,6 +66,7 @@ def hello():
 
 @app.route("/auth", methods = ["POST"])
 def auth():
+    print request.json
     if conf['auth_scheme'] == 'always':
         secret = always_auth()
     elif conf['auth_scheme'] == 'ldap':
