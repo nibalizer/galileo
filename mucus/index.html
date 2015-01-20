@@ -198,6 +198,23 @@ $( "#ticketTable" ).on("click", "tr", function() {
 
             };
             ticket_metadata += '</ul><br/>';
+            ticket_metadata += '<div class="btn-group btn-group-justified" role="group" aria-label="...">';
+            ticket_metadata += '  <div class="btn-group" role="group">';
+            ticket_metadata += '    <button type="button" class="btn btn-default">Refresh</button>';
+            ticket_metadata += '  </div>';
+            ticket_metadata += '  <div class="btn-group" role="group">';
+            ticket_metadata += '    <button type="button" class="btn btn-default">Close</button>';
+            ticket_metadata += '  </div>';
+            ticket_metadata += '  <div class="btn-group" role="group">';
+            ticket_metadata += '    <button type="button" class="btn btn-default">Reply</button>';
+            ticket_metadata += '  </div>';
+            ticket_metadata += '  <div class="btn-group" role="group">';
+            ticket_metadata += '    <button type="button" class="btn btn-default">Assign</button>';
+            ticket_metadata += '  </div>';
+            ticket_metadata += '  <div class="btn-group" role="group">';
+            ticket_metadata += '    <button type="button" class="btn btn-default">Flag</button>';
+            ticket_metadata += '  </div>';
+            ticket_metadata += '</div>';
             var content_prettied = '<div class="well well-lg">';
             content_prettied += content.replace(/\n/g,'<br>');
             content_prettied += '</div>';
