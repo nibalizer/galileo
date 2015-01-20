@@ -8,6 +8,7 @@ import pysnotrocket
 
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'X-SNOT-Auth-Key'
 cors = CORS(app)
 
 def verify_auth():
