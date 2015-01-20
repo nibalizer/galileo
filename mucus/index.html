@@ -89,7 +89,7 @@ a.test {
 <div id="ticketbody"></div>
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Panel heading</div>
+  <div class="panel-heading">Please sign into Mucus, web frontend for Snort</div>
   <div class="panel-body">
     <table class="table table-hover table-striped" style="width:100%" id="ticketTable" >
     </table>
@@ -124,25 +124,29 @@ var username;
 // all modern n stuff
 openTix = function(){
     $( "div.panel-content" ).html( '' );
-    $.get( "http://localhost:5001/v1/tickets/open", function( response ) {
-        $( ".panel-heading" ).text( response.total + " Open Tickets" );
-        var tickets = [];
-        var ticketTable = $( "#ticketTable" );
-        var headers = "<tr> <th>Number</th> <th>From</th> <th>Subject</th> <th>Date</th> <th>Flags</th> </tr> ";
+    $.ajax({
+        url: "http://localhost:5001/v1/tickets/open",
+        success: function( response ) {
+            $( ".panel-heading" ).text( response.total + " Open Tickets" );
+            var tickets = [];
+            var ticketTable = $( "#ticketTable" );
+            var headers = "<tr> <th>Number</th> <th>From</th> <th>Subject</th> <th>Date</th> <th>Flags</th> </tr> ";
 
-        for (i = 0; i < response.tickets.length; i++) {
-            var tdLine = '<tr>'
-            tdLine += "<td>" + response.tickets[i].number + "</td>"
-            tdLine += "<td>" + response.tickets[i].from_line + "</td>"
-            tdLine += "<td>" + response.tickets[i].subject + "</td>"
-            tdLine += "<td>" + response.tickets[i].last_update + "</td>"
-            tdLine += "<td>" + response.tickets[i].flags + "</td>"
-            tdLine += "</tr>"
+            for (i = 0; i < response.tickets.length; i++) {
+                var tdLine = '<tr>'
+                tdLine += "<td>" + response.tickets[i].number + "</td>"
+                tdLine += "<td>" + response.tickets[i].from_line + "</td>"
+                tdLine += "<td>" + response.tickets[i].subject + "</td>"
+                tdLine += "<td>" + response.tickets[i].last_update + "</td>"
+                tdLine += "<td>" + response.tickets[i].flags + "</td>"
+                tdLine += "</tr>"
 
-            tickets.push( tdLine );
-        }
-        $( "#ticketTable" ).html( '' );
-        ticketTable.append( headers + tickets.join( "" ) );
+                tickets.push( tdLine );
+            }
+            $( "#ticketTable" ).html( '' );
+            ticketTable.append( headers + tickets.join( "" ) );
+        },
+        headers: { "X-SNOT-Auth-Key": authentication_token }
     });
 };
 $( document ).ready(function() {
