@@ -97,9 +97,9 @@ a.test {
   </div>
 </div>
 
-<div id="dialog" title="Authenticate">
+<div id="dialog" title="Please sign in">
       <form id="loginform" class="form-signin hidden">
-        <h2 class="form-signin-heading">Please sign in</h2>
+          <!--<h2 class="form-signin-heading">Please sign in</h2>-->
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -196,9 +196,7 @@ $( "#ticketTable" ).on("click", "tr", function() {
 $( "#loginform" ).submit(function( event ) {
     event.preventDefault();
     var email = $( "#loginform input#inputEmail" ).val();
-    console.log(email);
     var password = $( "#loginform input#inputPassword" ).val();
-    console.log( password );
     var user = email.split('@')[0]; // oh god the hax #TODO fix this
     $.ajax({
         url: "http://localhost:5003/auth",
@@ -207,9 +205,6 @@ $( "#loginform" ).submit(function( event ) {
         contentType : 'application/json',
         dataType: "json",
         success: function( data ) {
-            console.log( data);
-            console.log( data.secret_key );
-            console.log( data.timeout );
             authentication_token = data.secret_key;
             username = user;
         }
