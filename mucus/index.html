@@ -157,6 +157,9 @@ openTix = function(){
 };
 // This really doesn't fire well because authentication is required now
 $( document ).ready(function() {
+    authentication_token = $.cookie('auth_token');
+    username = $.cookie('user');
+    $( "#loginlogout" ).text("Logged in as: " + username );
     openTix();
 });
 // Clears screen, Mostly useful for debugging the view system, should probabaly be deleted
@@ -249,6 +252,8 @@ $( "#loginform" ).submit(function( event ) {
             authentication_token = data.secret_key;
             username = user;
             openTix();
+            $.cookie('auth_token', authentication_token, { expires: 7 });
+            $.cookie('user', user , { expires: 7 });
         }
     });
     $( "#dialog" ).dialog("close");
