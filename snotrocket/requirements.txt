@@ -3,7 +3,7 @@ Flask-Cors==1.10.2
 Jinja2==2.7.3
 MarkupSafe==0.23
 PyYAML==3.11
-Werkzeug==0.9.6
+Werkzeug==0.15.3
 argparse==1.2.1
 elasticsearch==1.2.0
 getent==0.2
