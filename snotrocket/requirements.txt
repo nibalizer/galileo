@@ -10,5 +10,5 @@ getent==0.2
 itsdangerous==0.24
 six==1.8.0
 tailer==0.3
-urllib3==1.10
+urllib3==1.26.5
 wsgiref==0.1.2
